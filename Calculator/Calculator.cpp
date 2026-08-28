@@ -87,7 +87,7 @@ void Calculator::run()
             }
         }
 
-        std::cout << "Введите операцию (+, -, *, /, ^, %) или 'q' для выхода: ";
+        std::cout << "Введите операцию (+, -, *, /, ^, %), 'h' - история, 'q' - выход: ";
         std::cin >> operation;
 
         if (std::cin.fail())
@@ -95,6 +95,12 @@ void Calculator::run()
             std::cin.clear();
             std::cin.ignore(1000, '\n');
             std::cout << "Некорректный ввод операции.\n";
+            continue;
+        }
+
+        if (operation == 'h')
+        {
+            printHistory();
             continue;
         }
 
@@ -114,6 +120,7 @@ void Calculator::run()
         {
             std::cout << "Результат: " << result << "\n";
             lastResult = result;
+            history.push_back(std::to_string(num1) + " " + operation + " " + std::to_string(num2) + " = " + std::to_string(result));
 
             std::cout << "Использовать результат как первое число для следующего расчёта? (y/n): ";
             char chainChoice;
@@ -127,4 +134,19 @@ void Calculator::run()
     }
 
     std::cout << "Выход из программы.\n";
+}
+
+void Calculator::printHistory()
+{
+    if (history.empty())
+    {
+        std::cout << "\nИстория пуста.\n";
+        return;
+    }
+
+    std::cout << "\n--- История вычислений ---\n";
+    for (size_t i = 0; i < history.size(); i++)
+    {
+        std::cout << i + 1 << ") " << history[i] << "\n";
+    }
 }
