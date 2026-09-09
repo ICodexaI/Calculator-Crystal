@@ -105,7 +105,7 @@ void Calculator::run()
 
         }
 
-        std::cout << "Введите операцию (+, -, *, /, ^, %), 'h' - история, 'c' - очистить историю, 'q' - выход: ";
+        std::cout << "Операция (+, -, *, /, ^, %), 'h'-история, 'c'-очистить, 'a'-в память(M+), 'r'-из памяти(MR), 'x'-очистить память(MC), 's'-сохранить историю, 'q'-выход: ";
         std::cin >> operation;
 
         if (std::cin.fail())
@@ -128,6 +128,38 @@ void Calculator::run()
 
         {
             clearHistory();
+            continue;
+        }
+
+        if (operation == 'a')
+
+        {
+            memory += lastResult;
+            std::cout << "\nВ память добавлено: " << formatNumber(lastResult) << ". Память: " << formatNumber(memory) << "\n";
+            continue;
+        }
+
+        if (operation == 'r')
+
+        {
+            std::cout << "\nЗначение из памяти: " << formatNumber(memory) << "\n";
+            lastResult = memory;
+            useLastResult = true;
+            continue;
+        }
+
+        if (operation == 'x')
+
+        {
+            memory = 0;
+            std::cout << "\nПамять очищена.\n";
+            continue;
+        }
+
+        if (operation == 's')
+
+        {
+            saveHistoryToFile();
             continue;
         }
 
@@ -172,6 +204,7 @@ void Calculator::run()
 
                 std::cin.clear();
                 std::cin.ignore(1000, '\n');
+                continue;
 
             }
         }
@@ -214,6 +247,40 @@ void Calculator::clearHistory()
 {
     history.clear();
     std::cout << "\nИстория очищена.\n";
+}
+
+void Calculator::saveHistoryToFile()
+
+{
+    if (history.empty())
+
+    {
+        std::cout << "\nИстория пуста, нечего сохранять.\n";
+        return;
+
+    }
+
+    std::ofstream file("history.txt");
+
+    if (!file.is_open())
+
+    {
+        std::cout << "\nОшибка: не удалось создать файл.\n";
+        return;
+
+    }
+
+    for (size_t i = 0; i < history.size(); i++)
+
+    {
+        file << i + 1 << ") " << history[i] << "\n";
+
+    }
+
+    file.close();
+
+    std::cout << "\nИстория сохранена в history.txt\n";
+
 }
 
 std::string Calculator::formatNumber(double number)
