@@ -76,6 +76,8 @@ void Calculator::run()
     bool useLastResult = false;
     double lastResult = 0;
 
+    loadHistoryFromFile();
+
     std::cout << "Для выхода введите 'q' вместо операции.\n";
 
     while (running)
@@ -273,13 +275,41 @@ void Calculator::saveHistoryToFile()
     for (size_t i = 0; i < history.size(); i++)
 
     {
-        file << i + 1 << ") " << history[i] << "\n";
+        file << history[i] << "\n";
 
     }
 
     file.close();
 
     std::cout << "\nИстория сохранена в history.txt\n";
+
+}
+
+void Calculator::loadHistoryFromFile()
+
+{
+    std::ifstream file("history.txt");
+
+    if (!file.is_open())
+
+    {
+        return;
+
+    }
+
+    std::string line;
+    while (std::getline(file, line))
+
+    {
+        if (!line.empty())
+
+        {
+            history.push_back(line);
+        }
+
+    }
+
+    file.close();
 
 }
 

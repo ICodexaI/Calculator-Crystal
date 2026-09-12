@@ -11,6 +11,7 @@ private:
     void printHistory();
     void clearHistory();
     void saveHistoryToFile();
+    void loadHistoryFromFile();
     std::string formatNumber(double number);
 
 
