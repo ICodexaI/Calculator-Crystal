@@ -4,4 +4,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="Calculator/Calculator.vcxproj" Id="6e8dd3ab-9b5d-4464-ac03-f434123dc67f" />
+  <Project Path="GUI/GUI.vcxproj" Id="c4ed77d4-95f9-4391-bb1d-ae202daabbb0">
+    <Platform Project="x64" />
+  </Project>
 </Solution>
